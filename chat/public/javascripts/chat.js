@@ -18,7 +18,7 @@ var get_msg = function () {
   	    //add messages in data to the display
   	    for (var i in data){
   	    	maxMID = (data.mid > maxMID) : data.mid ? maxMID;
-  	    	display.append("<p>" + data.msg + "</p>")  
+  	    	display.append("<p>" + data.message + "</p>")  
   	    }
 		//$('#display').text(messages);
 	});

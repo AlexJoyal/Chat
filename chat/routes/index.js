@@ -42,14 +42,3 @@ exports.set_msg = function (req, res) {
 		//res.send({ 'msg' : msg });	
 	};
 
-function storeMessage(msg){
-	var that = this;
-    pg.connect(that.conn, function (err, client) {
-        var sql = 'insert into messages values(default, $1, $2);';
-        client.query(sql, [msg, Date.now()],
-                    function (err, result) {
-                        cb(err, obj)
-                    });
-        });
-	}
-}
