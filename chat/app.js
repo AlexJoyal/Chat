@@ -5,7 +5,6 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , messages = require('dmessages')
 
 var app = module.exports = express.createServer();
 

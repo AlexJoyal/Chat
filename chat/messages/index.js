@@ -19,24 +19,24 @@ exports.db = function (user, db) {
     return obj;
 }
 
-function getMessages (maxMID) {
+function retrieveMessages (cb) {
     var that = this;
     pg.connect(that.conn, function (err, client) {
-        client.query('select * from messages where mid>' + maxMID + ';',
+        client.query('select * from messages where mid >' + maxMID + ';',
                      function (err, result) {
-                         return result;
+                         cb(err, result);
                      });
     });
 
 };
 
-function storeMessage(msg){
+function addMessage(msg, cb){
 	var that = this;
     pg.connect(that.conn, function (err, client) {
         var sql = 'insert into messages values(default, $1, $2);';
         client.query(sql, [msg, Date.now()],
                     function (err, result) {
-                        console.log(result);
+                        cb(err, result);
                     });
         });
 	}
