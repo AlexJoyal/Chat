@@ -22,23 +22,23 @@ exports.db = function (user, db) {
 function getMessages (maxMID) {
     var that = this;
     pg.connect(that.conn, function (err, client) {
-        client.query('select * from messages where mid>' + maxMID + ';',
-                     function (err, result) {
+	var q = 'select * from messages where mid >' + maxMID + ';';
+        var r = client.query(q, function (err, result) {
                          return result;
                      });
     });
+    return r;
 
 };
 
 function storeMessage(msg){
 	var that = this;
-    pg.connect(that.conn, function (err, client) {
+    	pg.connect(that.conn, function (err, client) {
         var sql = 'insert into messages values(default, $1, $2);';
         client.query(sql, [msg, Date.now()],
                     function (err, result) {
                         console.log(result);
                     });
         });
-	}
 }
 
