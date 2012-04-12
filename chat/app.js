@@ -31,7 +31,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/chat', routes.chat);
-app.get('/get-msg', routes.get_msg);
+app.post('/get-msg', routes.get_msg);
 app.post('/set-msg', routes.set_msg);
 app.listen(4455);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

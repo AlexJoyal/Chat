@@ -22,12 +22,25 @@ exports.get_msg = function (req, res) {
 		// Set the content type:
 		res.contentType('application/json');
 		var data = req.body;
-		console.log()
-		var msgs = getMessages(data.mid);
-		console.log(msgs.rows);
+		var maxMID = parseInt(data.mid, 10);
+		//var msgs = getMessages(maxMID);
+		db = messages.db('ajoyal');
+		db.retrieveMessages(maxMID, function(err, result){
+					if (err) {
+                        			console.log(err.toString());
+                        			console.log('No messages to send');
+                     			} else {
+						//console.log("retrieved data..sending to client" + JSON.stringify(result.rows));
+						res.send({ 'msgs' : result.rows});
+                     			}
 
-		// Send the result:
-		res.send({ 'msgs' : msgs });
+		});
+
+		/*if (msgs){
+			console.log(JSON.stringify(msgs));
+			// Send the result:
+			res.send({ 'msgs' : JSON.stringify(msgs) });
+		}*/
 	};
 
 // This handler function receives a JSON message from
@@ -56,11 +69,19 @@ function storeMessage(msg){
 			});
 }
 
-function getMessages(maxMID){
+/*function getMessages(maxMID){
 	db = messages.db('ajoyal');
-	var data; 
 	db.retrieveMessages(maxMID, function(err, result){
-						data = result.rows;
+					if (err) {
+                        			console.log(err.toString());
+                        			console.log('No messages to send');
+                     			} else {
+						console.log("retrieved data..sending to client" + JSON.stringify(result.rows));
+						that.dat = result.rows;
+                     			}
+
 					});
-	return data;
-}
+
+	console.log("dat: " + JSON.stringify(dat));
+	return dat;
+}*/

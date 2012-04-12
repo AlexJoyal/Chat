@@ -1,26 +1,31 @@
 // This function
 
 var maxMID = 0;
-var display = $('#chat');
 
 //requests new messages from the server, returns 
 var get_msg = function () {
+	console.log(maxMID);
 	var req = $.ajax({
-		type: 'GET',
+		type: 'POST',
 		url : '/get-msg',
-		mid : maxMID
+		data: { 'mid' : maxMID }
 	});
 	
 	req.done(function (data) {
-		//console.log('received data: ' + data.msg);
+	    //console.log('received data: ' + data);
   	    
   	    //TO DO
   	    //add messages in data to the display
-  	    for (var i in data.rows){
-  	    	if (data.rows[i].mid > maxMID){
-			maxMID = data.rows[i].mid;
+  	    //console.log(data.msgs[1]);
+
+	    var display = $('#chat');
+  	    for (var i in data.msgs){
+		//console.log(data.msgs);
+  	    	if (data.msgs[i].mid > maxMID){
+			maxMID = data.msgs[i].mid;
+			console.log(typeof data.msgs[i].message);
 		} 
-  	    	display.prepend("<p>" + data.rows[i].message + "</p>")  
+  	    	display.prepend('<p>' + data.msgs[i].message + '</p>');
   	    }
 		//$('#display').text(messages);
 	});
