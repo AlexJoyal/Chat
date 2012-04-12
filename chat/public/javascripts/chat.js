@@ -23,33 +23,34 @@ var get_msg = function () {
 		//console.log(data.msgs);
   	    	if (data.msgs[i].mid > maxMID){
 			maxMID = data.msgs[i].mid;
-			console.log(typeof data.msgs[i].message);
+			//console.log(typeof data.msgs[i].message);
 		} 
   	    	display.prepend('<p>' + data.msgs[i].message + '</p>');
   	    }
-		//$('#display').text(messages);
 	});
 };
 
 //sends clients latest message to the server
 var set_msg = function () {
 	var msg = $('#msg').text();
-	var req = $.ajax({
-		type: 'POST',
-		url : '/set-msg',
-		data: { 'msg' : msg }
-	});
-	
-	req.done(function (data) {
-		console.log("msg sent");
-		/*var notify = $('#notify');
-		notify.html('Message "' + data.msg + '" Received');
-		
-		//$('#display').text(messages);
-		notify.fadeOut(function () {
-			notify.empty();
-			notify.show();*/
+	if (msg.length <= 140){
+		var req = $.ajax({
+			type: 'POST',
+			url : '/set-msg',
+			data: { 'msg' : msg }
 		});
+		req.done(function (data) {
+			console.log("msg sent");
+		});
+	} else {
+		var notify = $('#notify');
+		notify.html('Message longer than 140 characters, cannot send');
+		notify.fadeOut(2000, function () {
+			notify.empty();
+			notify.show();
+			});
+	}
+	
 } 
 
 var interval_id;
