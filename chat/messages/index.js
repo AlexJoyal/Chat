@@ -32,8 +32,8 @@ function retrieveMessages (maxMID, cb) {
 function addMessage(msg, cb){
 	var that = this;
     	pg.connect(that.conn, function (err, client) {
-        var sql = 'insert into messages values(default, $1, $2);';
-        client.query(sql, [msg, Date.now()],
+        var sql = 'insert into messages values(default, $1, now());';
+        client.query(sql, [msg],
                     function (err, result) {
                         cb(err, result);
                     });

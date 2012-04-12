@@ -17,8 +17,10 @@ var get_msg = function () {
   	    //TO DO
   	    //add messages in data to the display
   	    for (var i in data){
-  	    	maxMID = (data.mid > maxMID) : data.mid ? maxMID;
-  	    	display.append("<p>" + data.message + "</p>")  
+  	    	if (data[i].mid > maxMID){
+			maxMID = data[i].mid;
+		} 
+  	    	display.prepend("<p>" + data[i].message + "</p>")  
   	    }
 		//$('#display').text(messages);
 	});
@@ -43,8 +45,7 @@ var set_msg = function () {
 			notify.empty();
 			notify.show();*/
 		});
-	});
-};
+} 
 
 var interval_id;
 
