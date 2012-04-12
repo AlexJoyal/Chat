@@ -15,13 +15,14 @@ exports.chat = function(req, res){
 
 	res.render('chat', {title: "Chat"});
 }
-var prevmsg;
+
 // This handler function sends a JSON message containing
 // "the message" back to the client:
 exports.get_msg = function (req, res) {
 		// Set the content type:
 		res.contentType('application/json');
 		var data = req.body;
+		console.log()
 		var msgs = getMessages(data.mid);
 		//console.log('get: ' + msg);
 
@@ -58,7 +59,9 @@ function storeMessage(msg){
 
 function getMessages(maxMID){
 	db = messages.db('ajoyal');
-	return db.retrieveMessages(maxMID, function(err, result){
-						return result;
+	var data; 
+	db.retrieveMessages(maxMID, function(err, result){
+						data = result.rows;
 					});
+	return data;
 }
