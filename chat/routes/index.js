@@ -23,7 +23,7 @@ exports.get_msg = function (req, res) {
 		res.contentType('application/json');
 		var data = req.body;
 		var msgs = getMessages(data.mid);
-		//console.log('get: ' + msg);
+		console.log(msgs.rows);
 
 		// Send the result:
 		res.send({ 'msgs' : msgs });
@@ -46,14 +46,13 @@ exports.set_msg = function (req, res) {
 function storeMessage(msg){
 	db = messages.db('ajoyal');
 	db.addMessage(msg, function(err, result){
-									if (err) {
-                         				console.log(err.toString());
-                         				console.log('Could not add msg!');
-                     				} else {
-                         				console.log('Added message ' + msg);
-                     				}
-                    			 	process.exit(0);
-							});
+					if (err) {
+                        			console.log(err.toString());
+                        			console.log('Could not add msg!');
+                     			} else {
+                        			console.log('Added message ' + msg);
+                     			}
+			});
 }
 
 function getMessages(maxMID){

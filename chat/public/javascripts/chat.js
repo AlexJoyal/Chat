@@ -16,11 +16,11 @@ var get_msg = function () {
   	    
   	    //TO DO
   	    //add messages in data to the display
-  	    for (var i in data){
-  	    	if (data[i].mid > maxMID){
-			maxMID = data[i].mid;
+  	    for (var i in data.rows){
+  	    	if (data.rows[i].mid > maxMID){
+			maxMID = data.rows[i].mid;
 		} 
-  	    	display.prepend("<p>" + data[i].message + "</p>")  
+  	    	display.prepend("<p>" + data.rows[i].message + "</p>")  
   	    }
 		//$('#display').text(messages);
 	});
