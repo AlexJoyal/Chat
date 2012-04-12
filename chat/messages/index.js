@@ -14,12 +14,12 @@ exports.db = function (user, db) {
 
     var obj = {};
     obj.conn = 'tcp://' + user + '@' + host + ':' + port + '/' + db;
-    obj.getMessages = getMessages;
-    obj.storeMessage = storeMessage;
+    obj.retrieveMessages = retrieveMessages;
+    obj.addMessage = addMessage;
     return obj;
 }
 
-function retrieveMessages (cb) {
+function retrieveMessages (maxMID, cb) {
     var that = this;
     pg.connect(that.conn, function (err, client) {
     client.query('select * from messages where mid >' + maxMID + ';',
@@ -27,8 +27,6 @@ function retrieveMessages (cb) {
                          cb(err, result);
                      });
     });
-    return r;
-
 };
 
 function addMessage(msg, cb){

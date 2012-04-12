@@ -3,7 +3,7 @@
  * GET home page.
  */
 var msg = 'No new messages';
-var messages = require('./messages');
+var messages = require('messages');
 
 exports.index = function(req, res){
   res.render('index', { title: 'Express' })
@@ -58,7 +58,7 @@ function storeMessage(msg){
 
 function getMessages(maxMID){
 	db = messages.db('ajoyal');
-	return db.retrieveMessages(function(err result){
-									return result;
-								});
+	return db.retrieveMessages(maxMID, function(err, result){
+						return result;
+					});
 }
