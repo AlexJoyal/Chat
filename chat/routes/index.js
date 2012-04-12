@@ -3,6 +3,7 @@
  * GET home page.
  */
 var msg = 'No new messages';
+var messages = require('./messages');
 
 exports.index = function(req, res){
   res.render('index', { title: 'Express' })
@@ -42,3 +43,22 @@ exports.set_msg = function (req, res) {
 		//res.send({ 'msg' : msg });	
 	};
 
+function storeMessage(msg){
+	db = messages.db('ajoyal');
+	db.addMessage(msg, function(err, result){
+									if (err) {
+                         				console.log(err.toString());
+                         				console.log('Could not add msg!');
+                     				} else {
+                         				console.log('Added message ' + msg);
+                     				}
+                    			 	process.exit(0);
+							});
+}
+
+function getMessages(maxMID){
+	db = messages.db('ajoyal');
+	return db.retrieveMessages(function(err result){
+									return result;
+								});
+}
