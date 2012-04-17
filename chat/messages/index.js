@@ -8,21 +8,21 @@ var port = 7391;
 var client;
 
 exports.db = function (user, db) {
-    if (!db) {
-        db = user;
-    }
+	if (!db) {
+		db = user;
+	}
 
-    var obj = {};
-    obj.conn = 'tcp://' + user + '@' + host + ':' + port + '/' + db;
-    obj.retrieveMessages = retrieveMessages;
-    obj.addMessage = addMessage;
-    return obj;
+   	obj = {};
+	obj.conn = 'tcp://' + user + '@' + host + ':' + port + '/' + db;
+	obj.retrieveMessages = retrieveMessages;
+	obj.addMessage = addMessage;
+	return obj;
 }
 
 function retrieveMessages (maxMID, cb) {
-    var that = this;
-    pg.connect(that.conn, function (err, client) {
-    client.query('select * from messages where mid >' + maxMID + ';',
+	var that = this;
+	pg.connect(that.conn, function (err, client) {
+	client.query('select * from messages where mid >' + maxMID + ';',
                      function (err, result) {
                          cb(err, result);
                      });
